@@ -14,6 +14,7 @@ export default defineConfig({
         { path: '/login', component: '@/pages/Login' },
         { path: '/users', component: '@/pages/users' },
         { exact: true, path: '/users/:id?', component: '@/pages/users/[id$]' },
+        { component: '@/pages/404' },
       ],
     },
   ],

@@ -16,7 +16,7 @@ const Layout = (props: IRouteComponentProps): JSX.Element => {
     return (
       <div className={styles.top_bottom_layout}>
         <Header></Header>
-        <>{props.children}</>
+        <React.StrictMode>{props.children}</React.StrictMode>
       </div>
     )
   } else {
