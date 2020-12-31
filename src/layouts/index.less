@@ -3,12 +3,17 @@
   display: flex;
   flex-direction: column;
   height: 100%;
-  div:first-child {
+  & > div:first-child {
     height: @top_bottom_layout_headerHeight;
     background-color: #eee;
   }
-  div:nth-child(2) {
+  & > div:nth-child(2) {
     height: calc(100% - @top_bottom_layout_headerHeight);
     background-color: #999;
+  }
+  :global {
+    .react-grid-item {
+      background-color: sienna;
+    }
   }
 }
