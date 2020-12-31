@@ -1,45 +1,40 @@
 import { AxiosRequestConfig } from 'axios'
-type API = {
-  [key: string]: string
-}
-const a: API = {
-  getUserList: '/worker/ui/list',
-  getWorkerInfo: '/worker/:userid',
-  getAssetsList: '/asset/ui/select',
-  getGroupTree: '/worker/group/ui/list',
-  getWorkerType: '/worker/type/ui/list',
-  postWorkerInfo: 'POST /worker',
-  uploadImg: 'POST /worker/upload',
-  uploadIdCardFront: 'POST /worker/card/front/upload',
-  uploadIdCardBack: 'POST /worker/card/back/upload',
-}
-export default a
 
-type PromiseFn = (
-  data: any,
-  axiosExtraOptions?: AxiosRequestConfig | null | undefined,
-) => Promise<{
-  list?: any[] | undefined
-  code?: number | undefined
-  data?: any
-  msg?: string | undefined
-  status?: number | undefined
+const API: Record<string, string> = {
+  app_login: 'post /uc/auth/devLogin',
+  app_logout: 'get /uc/auth/logout',
+}
+
+export interface APIRes {
   success: boolean
-  message: string
-  statusCode: number
+  data: any
+  code: number
+  msg: string
+  status: number
+}
+export type APIResponse = (
+  data?: any,
+  AxiosOptions?: AxiosRequestConfig,
+) => Promise<{
+  success: boolean
+  data: any
+  code: number
+  msg: string
+  status: number
 }>
 
-interface APIRef {
-  [key: string]: PromiseFn
+const APIs = {
+  checkIsDeveloper: 'post /uc/user/isDeveloper',
+  getPdsStats: 'post /rf/pds/trans/bim/stats',
 }
-export interface APIRequest extends APIRef {
-  getUserList: PromiseFn
-  getWorkerInfo: PromiseFn
-  getAssetsList: PromiseFn
-  getGroupTree: PromiseFn
-  getWorkerType: PromiseFn
-  postWorkerInfo: PromiseFn
-  uploadImg: PromiseFn
-  uploadIdCardFront: PromiseFn
-  uploadIdCardBack: PromiseFn
+
+type APIRequest<T extends keyof typeof APIs> = {
+  [key in keyof typeof APIs]: APIResponse
 }
+
+export interface APIRef extends Record<string, APIResponse> {
+  app_login: APIResponse
+  app_logout: APIResponse
+}
+
+export default API

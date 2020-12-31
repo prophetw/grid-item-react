@@ -1,130 +1,114 @@
-import axios, { AxiosRequestConfig } from 'axios'
-import { cloneDeep, method } from 'lodash'
-const { parse, compile } = require('path-to-regexp')
 import { message } from 'antd'
-import { CANCEL_REQUEST_MESSAGE } from './constant'
+import axios, { AxiosRequestConfig } from 'axios'
+import { cloneDeep } from 'lodash'
 
-interface Result {
-  list?: any[]
-  code?: number
-  data?: any //{menuList: Array(1), assetList: Array(1)}
-  msg?: string
-  status?: number
-}
-declare global {
-  interface Window {
-    cancelRequest: Map<any, any>
+export const applyDataToUrl = (url: string, data: Record<string, string>) => {
+  // url = query/user/:userid   data { userid: 8283131, ID:123 }
+  // result url = query/user/8283131
+  // data {ID:123}
+  // 剩余的data参数 会根据请求的不同 放到 请求的url里面或者请求的body里面
+  if (typeof data !== 'object') {
+    return url
   }
+  for (const key in data) {
+    if (url.indexOf(':' + key) > -1) {
+      url = url.replace(':' + key, data[key])
+      delete data[key]
+    }
+  }
+  return url
 }
-
-const { CancelToken } = axios
-window.cancelRequest = new Map()
-export default function request(
-  options: AxiosRequestConfig,
-): Promise<{
-  list?: any[] | undefined
-  code?: number
-  data?: any
-  msg?: string | undefined
-  status?: number | undefined
+export default function request(options: {
+  method: string
+  url: string
+  data: any
+  AxiosOptions: AxiosRequestConfig
+}): Promise<{
   success: boolean
-  message: string
-  statusCode: number
+  data: any
+  code: number
+  msg: string
+  status: number
 }> {
-  let { url = '' } = options
-  const { data, method = 'GET' } = options
-  const cloneData = cloneDeep(data)
+  // const access_token = getCookie('ldbp_curToken') || 'NO_TOKENS'
+  // console.log(access_token)
+  const { method = 'get', data = {}, AxiosOptions = {} } = options
+  //  data 根据 method 的不同，
+  //  get  data 的数据都会在 url 里面, 也就是 AxiosOptions.params 里面
+  //  post data 默认作为body 想要往url里面传参数 可以利用 AxiosOptions.params={paramA: xxx}
+  let { url } = options
+  const clonedData = cloneDeep(data)
+  // console.log(' clonedData ', clonedData);
+  url = applyDataToUrl(url, clonedData)
 
-  try {
-    let domain = ''
-    const urlMatch = url.match(/[a-zA-z]+:\/\/[^/]*/)
-    if (urlMatch) {
-      ;[domain] = urlMatch
-      url = url.slice(domain.length)
-    }
-
-    const match = parse(url)
-    url = compile(url)(data)
-
-    for (const item of match) {
-      if (item instanceof Object && item.name in cloneData) {
-        delete cloneData[item.name]
-      }
-    }
-    url = domain + url
-  } catch (e) {
-    message.error(e.message)
+  let opts: AxiosRequestConfig = {
+    url,
+    method,
   }
-
-  options.url = url
-  if (method === 'GET') {
-    options.params = cloneData
+  if (method === 'get') {
+    opts.params = clonedData
+  } else {
+    // POST DELETE
+    // post url params 可以利用 AxiosOptions 传递  https://github.com/axios/axios#request-config
+    // AxiosOptions = { params: {ID: 1234} } =>  https:xxx.api.com?ID=1234
+    // `data` is the data to be sent as the request body
+    // Only applicable for request methods 'PUT', 'POST', 'DELETE , and 'PATCH'
+    if (clonedData && Object.keys(clonedData).length > 0) {
+      opts.data = clonedData
+    }
   }
-  // else{
-  // 	options.data = cloneData
-  // }
-  options.cancelToken = new CancelToken((cancel) => {
-    window.cancelRequest.set(Symbol(Date.now()), {
-      pathname: window.location.pathname,
-      cancel,
-    })
-  })
-  return axios(options)
-    .then((response) => {
-      // console.log(' -------- ', response)
-      const { statusText, status, data } = response
-
-      let result: Result = {}
-      if (typeof data === 'object') {
-        result = data
-        if (Array.isArray(data)) {
-          result.list = data
+  opts = Object.assign({}, opts, AxiosOptions)
+  let result: {
+    success: boolean
+    data: any
+    code: number
+    msg: string
+    status: number
+  } = {
+    success: true,
+    data: null,
+    code: 200,
+    msg: '',
+    status: 200,
+  }
+  if (access_token) {
+    axios.defaults.headers.common['access_token'] = access_token
+  }
+  return axios.request(opts).then(
+    (res) => {
+      // console.log(' axios response ', res)
+      if (res.status === 200 && res.data && res.data.code === 200) {
+        result = {
+          success: true,
+          data: res.data.data || null,
+          code: res.data.code,
+          msg: res.data.msg,
+          status: res.status,
         }
+        // console.log('axios result succ ', result)
+        return Promise.resolve(result)
       } else {
-        result.data = data
-      }
-
-      return Promise.resolve({
-        success: true,
-        code: status,
-        message: statusText,
-        statusCode: status,
-        ...result,
-      })
-    })
-    .catch((error) => {
-      const { response, message } = error
-
-      if (String(message) === CANCEL_REQUEST_MESSAGE) {
-        return {
+        result = {
           success: false,
-          statusCode: 200,
-          message: 'Cancel Request',
-          msg: 'Cancel Request',
-          code: 200,
-          data: null,
+          data: res.data,
+          status: res.status,
+          code: res.data.code,
+          msg: res.data.msg || res.statusText,
         }
+        // console.log('axios result fail ', result)
+        if (res.data && res.data.msg) {
+          message.error(res.data.msg)
+        }
+        return Promise.reject(result)
       }
-
-      let msg
-      let statusCode
-
-      if (response && response instanceof Object) {
-        const { data, statusText } = response
-        statusCode = response.status
-        msg = data.message || statusText
-      } else {
-        statusCode = 600
-        msg = error.message || 'Network Error'
+    },
+    (err) => {
+      if (err instanceof Error) {
+        const msg = err.message
+        message.error(msg)
       }
-
-      /* eslint-disable */
-      return Promise.reject({
-        success: false,
-        statusCode,
-        message: msg,
-        msg,
-        code: statusCode,
-      })
-    })
+      console.error(err)
+      return Promise.reject(err)
+    },
+  )
 }

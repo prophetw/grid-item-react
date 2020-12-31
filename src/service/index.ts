@@ -1,38 +1,45 @@
-import request from '../utils/request'
-import { BaseUrl, apiPrefix } from '../utils/config'
-import api, { APIRequest } from './api'
 import { AxiosRequestConfig } from 'axios'
-
-const gen = (params: string) => {
-  let url = BaseUrl + apiPrefix + params
-  let method = 'GET'
-
-  const paramsArray = params.split(' ')
-  if (paramsArray.length === 2) {
-    method = paramsArray[0]
-    url = BaseUrl + apiPrefix + paramsArray[1]
+import request from '../utils/request'
+import API, { APIRef } from './api'
+export const decodeParams = (params: string) => {
+  const paramsArr = params.split(' ')
+  let method = 'get'
+  let url = ''
+  if (paramsArr.length === 3) {
+    method = paramsArr[0]
+    url = paramsArr[1]
   }
-
-  return function (data: any, axiosExtraOptions?: AxiosRequestConfig | null) {
-    if (!axiosExtraOptions) {
-      axiosExtraOptions = {}
+  if (paramsArr.length === 2) {
+    method = paramsArr[0]
+    url = paramsArr[1]
+  }
+  if (paramsArr.length === 1) {
+    url = paramsArr[1]
+  }
+  return {
+    url,
+    method,
+  }
+}
+export const gen = (params: string) => {
+  const { url, method } = decodeParams(params)
+  // baseUrl 替换成对应的 url
+  const baseUrl = '' || (window.Config && window.Config.serviceUrl)
+  const fullUrl = baseUrl + url
+  return function (data?: any, AxiosOptions: AxiosRequestConfig = {}) {
+    const opts = {
+      url: fullUrl,
+      method,
+      data,
+      AxiosOptions,
     }
-    const options: AxiosRequestConfig = Object.assign(
-      {},
-      {
-        data,
-        url,
-        method,
-      },
-      axiosExtraOptions,
-    )
-    return request(options)
+    return request(opts)
   }
 }
-
-const APIFunction: APIRequest = {}
-for (const key in api) {
-  APIFunction[key] = gen(api[key])
+// @ts-ignore
+const APIFunction: APIRef = {}
+for (const key in API) {
+  APIFunction[key] = gen(API[key])
 }
-
+// console.log(APIFunction)
 export default APIFunction
