@@ -12,7 +12,7 @@ const Layout = (props: IRouteComponentProps): JSX.Element => {
   const { pathname } = location
   console.log('pathname', pathname)
   //  可以根据不同的pathname 来定制不同的页面的 layout
-  if (pathname !== '/login') {
+  if (pathname !== '/login' && pathname !== '/demo') {
     return (
       <div className={styles.top_bottom_layout}>
         <Header></Header>

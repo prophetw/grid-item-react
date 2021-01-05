@@ -1,73 +1,40 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import styles from './index.less'
-import { Responsive, WidthProvider } from 'react-grid-layout'
+import GridLayout from '../components/GridLayout/ReactGridLayout'
 import '../../node_modules/react-grid-layout/css/styles.css'
 import '../../node_modules/react-resizable/css/styles.css'
-const ResponsiveGridLayout = WidthProvider(Responsive)
+import { useWindowSize } from '@/components/Hooks/useWindowSize'
 const Index = (): JSX.Element => {
-  const layout = [
-    {
-      x: 0,
-      y: 0,
-      w: 1,
-      h: 61,
-      i: '1',
-    },
-    {
-      x: 1,
-      y: 0,
-      w: 2,
-      h: 61,
-      i: '2',
-    },
-    {
-      x: 0,
-      y: 61,
-      w: 3,
-      h: 113,
-      i: '3',
-    },
-  ]
-  const newLayout = {
-    lg: layout,
-    md: layout,
-    sm: layout,
-    xs: layout,
-    xxs: layout,
-  }
-  const [isLayoutChange, setChanged] = useState(false)
+  const windowSize = useWindowSize()
+  const Container = useRef(null)
+  const layout1 = [{ i: 'a', x: 0, y: 0, w: 12, h: 6 }]
+  const [gridContainerHeight, setHeight] = useState(0)
+  const [gridContainerWidth, setWidth] = useState(0)
   useEffect(() => {
-    console.log(' layout is changed ')
-  }, [isLayoutChange])
+    if (Container.current && Container.current.offsetHeight) {
+      setHeight(Container.current.offsetHeight)
+    }
+    if (windowSize.width) {
+      setWidth(windowSize.width)
+    }
+  }, [windowSize])
   return (
-    <div className={styles.index_page}>
-      <ResponsiveGridLayout
+    <div className={styles.index_page} ref={Container}>
+      <GridLayout
+        style={{ height: '100%' }}
         className="layout"
-        layouts={newLayout}
-        rowHeight={1}
+        layout={layout1}
         margin={[4, 4]}
-        breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }}
-        cols={{ lg: 3, md: 3, sm: 3, xs: 3, xxs: 3 }}
-        onBreakpointChange={(a, b) => {
-          console.log(a)
-          console.log(b)
-        }}
-        autoSize={true}
-        onLayoutChange={(info) => {
-          setChanged(info)
-          console.log('layout change ', info)
-        }}
+        cols={12}
+        rows={12}
+        rowHeight={1}
+        isResizable={false}
+        isDraggable={false}
+        width={gridContainerWidth}
+        height={gridContainerHeight}
       >
-        <div key={'1'}>
-          <span className="text">{'1'}</span>
-        </div>
-        <div key={'2'}>
-          <span className="text">{'2'}</span>
-        </div>
-        <div key={'3'}>
-          <span className="text">{'3'}</span>
-        </div>
-      </ResponsiveGridLayout>
+        <div key="a">a</div>
+      </GridLayout>
     </div>
   )
 }
