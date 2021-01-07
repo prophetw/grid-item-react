@@ -1,0 +1,14 @@
+@import '../../themes/default.less';
+.project_container {
+  height: 100%;
+  .index_page {
+    height: calc(100% - @project_header_height);
+    background: chocolate;
+    overflow: hidden;
+    :global {
+      .react-grid-layout {
+        // height: 100%;
+      }
+    }
+  }
+}

@@ -4,12 +4,16 @@ import GridLayout from '../../components/GridLayout/ReactGridLayout'
 import '../../../node_modules/react-grid-layout/css/styles.css'
 import '../../../node_modules/react-resizable/css/styles.css'
 import { useWindowSize } from '@/components/Hooks/useWindowSize'
-import { prettierJSON } from '@/utils'
-
+import LayoutItem from '@/components/ReactGridItem/index'
 const Index = (): JSX.Element => {
   const windowSize = useWindowSize()
   const Container = useRef(null)
-  const layout1 = [{ i: 'a', x: 0, y: 0, w: 1, h: 1 }]
+  const layout1 = [
+    { w: 12, h: 3, x: 0, y: 0, i: 'a', moved: false, static: false },
+    { w: 4, h: 4, x: 0, y: 3, i: '1', moved: false, static: false },
+    { w: 4, h: 5, x: 0, y: 7, i: '50', moved: false, static: false },
+    { w: 8, h: 9, x: 4, y: 3, i: '46', moved: false, static: false },
+  ]
   const [layout, setLayout] = useState(layout1)
   const [gridContainerHeight, setHeight] = useState(0)
   const [gridContainerWidth, setWidth] = useState(0)
@@ -37,12 +41,7 @@ const Index = (): JSX.Element => {
     console.log(layout)
   }, [layout])
   return (
-    <div className={styles['demo-container']}>
-      <div className={styles.header}>
-        layouts:
-        <pre>{prettierJSON(layout)}</pre>
-        <button onClick={addNew}>新增</button>
-      </div>
+    <div className={styles['demo1-container']}>
       <div className={styles.index_page} ref={Container}>
         {gridContainerHeight && gridContainerWidth && (
           <GridLayout
@@ -52,6 +51,8 @@ const Index = (): JSX.Element => {
             margin={[4, 4]}
             cols={12}
             rowHeight={1}
+            isDraggable={false}
+            isResizable={false}
             width={gridContainerWidth}
             onLayoutChange={(info) => {
               setLayout(info)
@@ -62,7 +63,7 @@ const Index = (): JSX.Element => {
             rows={12}
           >
             {layout.map((item) => (
-              <div key={item.i}>{item.i}</div>
+              <LayoutItem key={item.i} id={item.i}></LayoutItem>
             ))}
           </GridLayout>
         )}

@@ -1,8 +1,8 @@
 import { AxiosRequestConfig } from 'axios'
 
 const API: Record<string, string> = {
-  app_login: 'post /uc/auth/devLogin',
-  app_logout: 'get /uc/auth/logout',
+  getLayout: 'get /api/layout/:projectid',
+  getComponentConfig: 'get /api/componentconfig/:id',
 }
 
 export interface APIRes {
@@ -23,18 +23,9 @@ export type APIResponse = (
   status: number
 }>
 
-const APIs = {
-  checkIsDeveloper: 'post /uc/user/isDeveloper',
-  getPdsStats: 'post /rf/pds/trans/bim/stats',
-}
-
-type APIRequest<T extends keyof typeof APIs> = {
-  [key in keyof typeof APIs]: APIResponse
-}
-
 export interface APIRef extends Record<string, APIResponse> {
-  app_login: APIResponse
-  app_logout: APIResponse
+  getLayout: APIResponse
+  getComponentConfig: APIResponse
 }
 
 export default API
