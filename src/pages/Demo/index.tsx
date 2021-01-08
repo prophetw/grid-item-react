@@ -4,7 +4,6 @@ import GridLayout from '../../components/GridLayout/ReactGridLayout'
 import '../../../node_modules/react-grid-layout/css/styles.css'
 import '../../../node_modules/react-resizable/css/styles.css'
 import { useWindowSize } from '@/components/Hooks/useWindowSize'
-import { prettierJSON } from '@/utils'
 
 const Index = (): JSX.Element => {
   const windowSize = useWindowSize()
@@ -40,7 +39,7 @@ const Index = (): JSX.Element => {
     <div className={styles['demo-container']}>
       <div className={styles.header}>
         layouts:
-        <pre>{prettierJSON(layout)}</pre>
+        {JSON.stringify(layout)}
         <button onClick={addNew}>新增</button>
       </div>
       <div className={styles.index_page} ref={Container}>

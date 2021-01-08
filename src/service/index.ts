@@ -24,7 +24,7 @@ export const decodeParams = (params: string) => {
 export const gen = (params: string) => {
   const { url, method } = decodeParams(params)
   // baseUrl 替换成对应的 url
-  const baseUrl = ''
+  const baseUrl = '' || (window.Config && window.Config.serviceUrl)
   const fullUrl = baseUrl + url
   return function (data?: any, AxiosOptions: AxiosRequestConfig = {}) {
     const opts = {

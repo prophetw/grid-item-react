@@ -10,7 +10,4 @@ declare module '*.svg' {
 }
 interface Window {
   Config: any
-  prettierPlugins: {
-    babel: any
-  }
 }

@@ -30,7 +30,7 @@ export default function request(options: {
   msg: string
   status: number
 }> {
-  const access_token = 'NO_TOKENS'
+  // const access_token = getCookie('ldbp_curToken') || 'NO_TOKENS'
   // console.log(access_token)
   const { method = 'get', data = {}, AxiosOptions = {} } = options
   //  data 根据 method 的不同，
