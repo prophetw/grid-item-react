@@ -1,0 +1,19 @@
+@import '../../themes/default.less';
+.demo-container {
+  height: 100%;
+  .header {
+    height: 100px;
+  }
+  .index_page {
+    overflow: hidden;
+    :global {
+      .react-grid-layout {
+        // height: 100%;
+        background-color: #666;
+        .react-grid-item {
+          background: chocolate;
+        }
+      }
+    }
+  }
+}

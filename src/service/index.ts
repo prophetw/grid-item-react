@@ -1,3 +1,4 @@
+import { apiPrefix } from '@/utils/config'
 import { AxiosRequestConfig } from 'axios'
 import request from '../utils/request'
 import API, { APIRef } from './api'
@@ -24,8 +25,8 @@ export const decodeParams = (params: string) => {
 export const gen = (params: string) => {
   const { url, method } = decodeParams(params)
   // baseUrl 替换成对应的 url
-  const baseUrl = '' || (window.Config && window.Config.serviceUrl)
-  const fullUrl = baseUrl + url
+  const baseUrl = window.baseUrl
+  const fullUrl = baseUrl + apiPrefix + url
   return function (data?: any, AxiosOptions: AxiosRequestConfig = {}) {
     const opts = {
       url: fullUrl,

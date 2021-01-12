@@ -1,0 +1,142 @@
+:global {
+  .header {
+    position: relative;
+  }
+}
+.dropdown_menu_container {
+  :global {
+    .ant-dropdown-menu {
+      background-color: #030d1a;
+      box-shadow: 0px 8px 20px 0px rgba(45, 88, 171, 0.61);
+      border: solid 1px #235e7c;
+      .ant-dropdown-menu-item,
+      .ant-dropdown-menu-item > a {
+        font-size: 12px;
+        color: #9fceff;
+        opacity: 0.85;
+      }
+    }
+  }
+  .dropdown_item_active {
+    background: #0b2254;
+  }
+}
+.menu_container {
+  height: 50px;
+  position: absolute;
+  width: 100%;
+  bottom: 27px;
+  left: 0;
+  color: white;
+  .left_arrow {
+    position: absolute;
+    left: 30px;
+    top: 3px;
+  }
+  .left_menu_container {
+    background-color: rgba(56, 161, 255, 0.15);
+    box-shadow: 0px 1px 4px 0px #011645;
+    border-style: solid;
+    border-width: 1px;
+    // border-image-source: linear-gradient(0deg, #1bc0ff 0%, #38a1ff 100%);
+    // border-image-slice: 1;
+    border-color: #38a1ff;
+    height: 53px;
+    top: 3px;
+    border-right: none;
+    border-left: none;
+    position: absolute;
+    overflow: hidden;
+    left: 118px;
+  }
+  .right_menu_container {
+    background-color: rgba(56, 161, 255, 0.15);
+    box-shadow: 0px 1px 4px 0px #011645;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #38a1ff;
+    border-right: none;
+    border-left: none;
+    top: 3px;
+    height: 53px;
+    right: 118px;
+    position: absolute;
+    overflow: hidden;
+  }
+  .right_arrow {
+    position: absolute;
+    right: 30px;
+    top: 3px;
+  }
+  .left_bg {
+    position: absolute;
+    left: 80px;
+  }
+  .right_bg {
+    position: absolute;
+    right: 80px;
+  }
+  .menu_item {
+    font-size: 16px;
+    color: #c9edff;
+    cursor: pointer;
+    line-height: 52px;
+    display: inline-block;
+    padding: 0 22px;
+    &.menu_item_active {
+      background-image: url(../../asserts/img/menu_active_bg.png);
+      background-size: 100% 100%;
+    }
+  }
+}
+.title_container {
+  .dropdown_container {
+    position: absolute;
+    left: 30px;
+    top: 12px;
+  }
+
+  :global {
+    .ant-dropdown-link {
+      font-family: MicrosoftYaHei;
+      font-size: 18px;
+      font-weight: normal;
+      font-stretch: normal;
+      line-height: 30px;
+      letter-spacing: 0px;
+      color: #9fceff;
+    }
+  }
+  .header_title {
+    margin: 0 auto;
+    width: 562px;
+    height: 109px;
+    background-image: url('../../asserts/img/header_title_bg.png');
+    text-align: center;
+    border-image-source: linear-gradient(0deg, #1bc0ff 0%, #38a1ff 100%);
+    border-image-slice: 1;
+    .gradient-text {
+      background-color: #f3ec78;
+      background-image: linear-gradient(180deg, #99ccff, #ffffff);
+      background-size: 100%;
+      -webkit-background-clip: text;
+      -moz-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      -moz-text-fill-color: transparent;
+    }
+    span {
+      font-family: MicrosoftYaHei-Bold;
+      font-size: 36px;
+      font-weight: bold;
+      font-stretch: normal;
+      line-height: 90px;
+      letter-spacing: 0px;
+      color: #49c1ff;
+      box-shadow: 0px 0px 0px 0px rgba(10, 68, 134, 0.67);
+      opacity: 0.9;
+    }
+    img {
+      position: absolute;
+    }
+  }
+}

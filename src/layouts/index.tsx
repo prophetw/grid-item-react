@@ -13,14 +13,18 @@ const Layout = (props: IRouteComponentProps): JSX.Element => {
   console.log('pathname', pathname)
   //  可以根据不同的pathname 来定制不同的页面的 layout
   if (pathname !== '/login' && pathname !== '/demo') {
+    let cls = ''
+    if (pathname === '/enterprise') {
+      cls = styles.enterprise_home
+    }
     return (
-      <div className={styles.top_bottom_layout}>
+      <div className={styles.top_bottom_layout + ' ' + cls}>
         <Header></Header>
-        <React.StrictMode>{props.children}</React.StrictMode>
+        <>{props.children}</>
       </div>
     )
   } else {
-    return <React.StrictMode>{props.children}</React.StrictMode>
+    return <>{props.children}</>
   }
 }
 export default Layout

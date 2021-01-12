@@ -9,5 +9,5 @@ declare module '*.svg' {
   export default url
 }
 interface Window {
-  Config: any
+  baseUrl: any
 }

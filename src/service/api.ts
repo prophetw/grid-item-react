@@ -3,6 +3,8 @@ import { AxiosRequestConfig } from 'axios'
 const API: Record<string, string> = {
   app_login: 'post /uc/auth/devLogin',
   app_logout: 'get /uc/auth/logout',
+  getDropdownMenu: 'get /component/ui/data',
+  getMenu: 'get /component/ui/data',
 }
 
 export interface APIRes {
@@ -35,6 +37,8 @@ type APIRequest<T extends keyof typeof APIs> = {
 export interface APIRef extends Record<string, APIResponse> {
   app_login: APIResponse
   app_logout: APIResponse
+  getDropdownMenu: APIResponse
+  getMenu: APIResponse
 }
 
 export default API

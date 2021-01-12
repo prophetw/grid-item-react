@@ -1,6 +1,7 @@
 import { message } from 'antd'
 import axios, { AxiosRequestConfig } from 'axios'
 import { cloneDeep } from 'lodash'
+import store from 'store'
 
 export const applyDataToUrl = (url: string, data: Record<string, string>) => {
   // url = query/user/:userid   data { userid: 8283131, ID:123 }
@@ -30,7 +31,7 @@ export default function request(options: {
   msg: string
   status: number
 }> {
-  // const access_token = getCookie('ldbp_curToken') || 'NO_TOKENS'
+  const access_token = store.get('TOKEN') || ''
   // console.log(access_token)
   const { method = 'get', data = {}, AxiosOptions = {} } = options
   //  data 根据 method 的不同，
@@ -72,11 +73,14 @@ export default function request(options: {
     status: 200,
   }
   if (access_token) {
-    axios.defaults.headers.common['access_token'] = access_token
+    axios.defaults.headers.common['access-token'] = access_token
   }
   return axios.request(opts).then(
     (res) => {
-      // console.log(' axios response ', res)
+      console.log(' axios response ', res)
+      // if (typeof res.data === 'string') {
+      //   res.data = JSON.parse(res.data)
+      // }
       if (res.status === 200 && res.data && res.data.code === 200) {
         result = {
           success: true,
