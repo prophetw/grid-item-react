@@ -1,11 +1,13 @@
 import { defineConfig } from 'umi'
-
+console.log(' mode ', process.env.NODE_ENV)
 export default defineConfig({
   nodeModulesTransform: {
     type: 'none',
   },
+  // base: '/dashboard',
+  publicPath: process.env.NODE_ENV === 'production' ? '/dashboard/' : '/',
   hash: true,
-  history: { type: 'hash' },
+  // history: { type: 'hash' },
   routes: [
     {
       exact: false,

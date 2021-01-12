@@ -269,6 +269,17 @@ const Header = () => {
   return (
     <div className={'header'}>
       <div className={styles.title_container}>
+        {!isProjectPage && (
+          <div
+            style={{
+              color: '#85beef',
+              fontSize: '30px',
+              textAlign: 'center',
+            }}
+          >
+            {enterprise}
+          </div>
+        )}
         {dropdownmenus && dropdownmenus.length > 0 && (
           <div className={styles.dropdown_container}>
             <Dropdown
