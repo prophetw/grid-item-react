@@ -32,7 +32,7 @@ export const getChartComponent = (
     }
     //endswitch2
   }
-  return <>请选择图标类型或自定义组件名</>
+  return <>请选择图表类型或自定义组件名</>
 }
 const NoUseComponent = () => <></>
 export default NoUseComponent

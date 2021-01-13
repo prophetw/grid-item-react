@@ -5,6 +5,7 @@ import styles from './index.less'
 import classnames from 'classnames'
 import ProjectBrain from '../../asserts/img/project_core.png'
 import EnvMonitor from '../../asserts/img/env_monitor.png'
+import LayoutMain from '@/components/LayoutMain/index'
 
 const Enterprise = (props: IRouteComponentProps) => {
   const model: DashboardType = useModel('useDashboard', (model) => model)
@@ -27,7 +28,8 @@ const Enterprise = (props: IRouteComponentProps) => {
       )}
       {curMenu && curMenu.id === '2' && (
         <div className={styles.project_brain}>
-          <img src={EnvMonitor} width={'100%'} height={'100%'} alt="" />
+          <LayoutMain componentid={curMenu.id} />
+          {/* <img src={EnvMonitor} width={'100%'} height={'100%'} alt="" /> */}
         </div>
       )}
       {curMenu && curMenu.id !== '1' && curMenu.id !== '2' && (

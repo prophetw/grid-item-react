@@ -39,7 +39,7 @@ const Header = () => {
   } = model
   const { width, height } = useWindowSize()
   const [menu, setMenu] = useState(null)
-  const menuContainerRef = useRef(<></>)
+  const menuContainerRef = useRef(document.createElement('div'))
   const menu_width = (width - 562 - (30 + 88) * 2) / 2
   const [leftMenus, setLeftMenus] = useState([])
   const [rightMenus, setRightMenus] = useState([])
@@ -111,8 +111,13 @@ const Header = () => {
     console.log(query)
     if (query && query['access-token']) {
       const token = query['access-token']
-      store.set('TOKEN', token)
+      store.set('token', token)
     }
+    if (query && query['assetid']) {
+      const assetid = query['assetid']
+      store.set('assetid', assetid)
+    }
+
     getDropdownMenus(projectId)
   }, [])
   useEffect(() => {
@@ -187,7 +192,7 @@ const Header = () => {
     }
     if (menus.length > 0 && dropdownmenus.length > 0) {
       if (menuItemWidthArr && menuItemWidthArr.length > 0) {
-        console.log('--- menu width', menuItemWidthArr)
+        // console.log('--- menu width', menuItemWidthArr)
       } else {
         // TODO: 缓存 menuItemWidth
         const menuItemWidth = menus.map((item: MenuItem) => {

@@ -7,7 +7,7 @@ import { useWindowSize } from '@/components/Hooks/useWindowSize'
 
 const Index = (): JSX.Element => {
   const windowSize = useWindowSize()
-  const Container = useRef(null)
+  const Container = useRef(document.createElement('div'))
   const layout1 = [{ i: 'a', x: 0, y: 0, w: 1, h: 1 }]
   const [layout, setLayout] = useState(layout1)
   const [gridContainerHeight, setHeight] = useState(0)

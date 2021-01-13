@@ -5,6 +5,8 @@ const API: Record<string, string> = {
   app_logout: 'get /uc/auth/logout',
   getDropdownMenu: 'get /component/ui/data',
   getMenu: 'get /component/ui/data',
+  getComponentConfig: 'get /component/:componentid',
+  getWidgetConfig: 'get /widget/:widgetid',
 }
 
 export interface APIRes {
@@ -39,6 +41,8 @@ export interface APIRef extends Record<string, APIResponse> {
   app_logout: APIResponse
   getDropdownMenu: APIResponse
   getMenu: APIResponse
+  getComponentConfig: APIResponse
+  getWidgetConfig: APIResponse
 }
 
 export default API
