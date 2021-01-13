@@ -5,12 +5,10 @@ import API from '@/service/index'
 import { getChartComponent } from './getComponent'
 const { getWidgetConfig } = API
 import classnames from 'classnames'
-import { Select } from 'antd'
-import title_arrow_right from '../../asserts/img/arrow_right.png'
-import title_arrow_left from '../../asserts/img/arrow_left.png'
 import Loading from '../Loading'
+import WidgetTitle from './WidgetTitle'
+import WidgetMenu from './WidgetMenu'
 
-const { Option } = Select
 interface PropsType {
   id: string
 }
@@ -118,29 +116,22 @@ const Index = (props: PropsType): JSX.Element => {
       })}
     >
       {config && config.reqMethod === undefined && <Loading />}
-      {config && config.reqMethod !== undefined && (
+
+      {/*  customComponent */}
+      {config &&
+        config.reqMethod !== undefined &&
+        config.customComponentName && <>{component}</>}
+
+      {/* chartComponent */}
+      {config && config.reqMethod !== undefined && config.chartName && (
         <>
-          <p className={'title'}>
-            <img src={title_arrow_right} alt="" />
-            <span style={{ margin: '0 20px' }}>{config.title}</span>
-            <img src={title_arrow_left} alt="" />
-          </p>
-          {config.menuId && (
-            <Select
-              className={'select'}
-              defaultValue={curSelectedMenu}
-              style={{ width: 120 }}
-              onChange={(value) => handleChange(value, ':deviceid')}
-            >
-              {config.menuList &&
-                config.menuList.map((menuItem: MenuItem) => {
-                  return (
-                    <Option key={menuItem.id} value={menuItem.id}>
-                      {menuItem.name}
-                    </Option>
-                  )
-                })}
-            </Select>
+          {config.title && <WidgetTitle title={config.title} />}
+          {config.menuId && config.menuList && (
+            <WidgetMenu
+              handleChange={handleChange}
+              curSelectedMenu={curSelectedMenu}
+              menuList={config.menuList}
+            />
           )}
           {component}
         </>

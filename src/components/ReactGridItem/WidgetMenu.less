@@ -1,0 +1,20 @@
+.dft_select_cls {
+  &.select {
+    position: absolute;
+    right: 10px;
+    z-index: 99;
+    border-radius: 4px;
+    border: solid 1px #31aacc;
+    opacity: 0.85;
+
+    :global {
+      .ant-select-selector {
+        color: white;
+        background-color: transparent;
+      }
+      .ant-select-arrow {
+        color: rgba(255, 252, 255, 0.6);
+      }
+    }
+  }
+}

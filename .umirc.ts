@@ -21,6 +21,7 @@ export default defineConfig({
         { path: '/enterprise', component: '@/pages/Enterprise' },
         { path: '/project', component: '@/pages/Project' },
         { path: '/users', component: '@/pages/users' },
+        { path: '/custom', component: '@/pages/Custom' },
         { exact: true, path: '/users/:id?', component: '@/pages/users/[id$]' },
         { component: '@/pages/404' },
       ],

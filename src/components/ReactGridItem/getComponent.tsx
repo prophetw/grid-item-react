@@ -2,6 +2,7 @@ import React from 'react'
 import DataV from '@/components/CustomComponents/DataV'
 import LineEchart from '../Charts/LineEchart'
 import Test from '@/components/CustomComponents/Test'
+import EnvMonitorHome from '../CustomComponents/EnvMonitorSummary'
 //endimport
 
 import { GirdLayoutItemConfig } from '.'
@@ -25,6 +26,8 @@ export const getChartComponent = (
     switch (customComponentName) {
       case 'DataV':
         return <DataV />
+      case 'EnvMonitorHome':
+        return <EnvMonitorHome config={componentConfig} />
       case 'Test':
         return <Test />
       default:

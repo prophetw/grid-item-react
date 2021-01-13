@@ -7,6 +7,7 @@ const API: Record<string, string> = {
   getMenu: 'get /component/ui/data',
   getComponentConfig: 'get /component/:componentid',
   getWidgetConfig: 'get /widget/:widgetid',
+  getEnvSummary: 'get /env-summary/:deviceid',
 }
 
 export interface APIRes {
@@ -43,6 +44,7 @@ export interface APIRef extends Record<string, APIResponse> {
   getMenu: APIResponse
   getComponentConfig: APIResponse
   getWidgetConfig: APIResponse
+  getEnvSummary: APIResponse
 }
 
 export default API

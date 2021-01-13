@@ -12,7 +12,49 @@ export default {
     })
     setTimeout(() => {
       res.end(data)
-    }, 2000)
+    }, 500)
+  },
+  '/things/v1/env-summary/:deviceid': (req: any, res: any) => {
+    const data = mockjs.mock({
+      code: 200,
+      data: [
+        {
+          name: 'PM2.5',
+          value: '64.55ug/m3',
+        },
+        {
+          name: 'PM10',
+          value: '64.55ug/m3',
+        },
+        {
+          name: 'TSP',
+          value: '64.55ug/m3',
+        },
+        {
+          name: '温度',
+          value: '13.4C',
+        },
+        {
+          name: '湿度',
+          value: '64.55%RH',
+        },
+        {
+          name: '噪音',
+          value: '63.4db',
+        },
+        {
+          name: '气压',
+          value: '99.04Kpa',
+        },
+        {
+          name: '风速',
+          value: '0.35Km/h',
+        },
+      ],
+    })
+    setTimeout(() => {
+      res.end(JSON.stringify(data))
+    }, 500)
   },
   '/things/v1/:projectid/menu': (req: any, res: any) => {
     const data = mockjs.mock({
@@ -62,7 +104,7 @@ export default {
     })
     setTimeout(() => {
       res.end(JSON.stringify(data))
-    }, 2000)
+    }, 500)
   },
   '/things/v1/component/:componentid': (req: any, res: any) => {
     // console.log(req.params)
@@ -90,7 +132,7 @@ export default {
     })
     setTimeout(() => {
       res.end(JSON.stringify(data))
-    }, 2000)
+    }, 500)
   },
   '/things/v1/widget/:widgetid': (req: any, res: any) => {
     // console.log(req.params)
@@ -139,15 +181,14 @@ export default {
       data = mockjs.mock({
         code: 200,
         data: {
-          API:
-            'http://192.168.2.57:9876/things/v1/tsenvironment/today/trends/:deviceid?properties=temperature',
-          title: '今日温度',
+          API: '',
+          title: '今日key',
           originalApi: '',
           reqMethod: 'get',
-          chartName: 'LineEchart',
-          customComponentName: '',
+          chartName: '',
+          customComponentName: 'EnvMonitorHome',
           component_bg_class: 'component_bg_3',
-          menuId: 'menuId',
+          menuId: '',
           menuList,
         },
       })
@@ -171,7 +212,7 @@ export default {
     }
     setTimeout(() => {
       res.end(JSON.stringify(data))
-    }, 2000)
+    }, 500)
   },
   '/things/v1/component/ui/data': (req: any, res: any) => {
     console.log(req.query.code)
@@ -240,6 +281,6 @@ export default {
 
     setTimeout(() => {
       res.end(JSON.stringify(data))
-    }, 2000)
+    }, 500)
   },
 }

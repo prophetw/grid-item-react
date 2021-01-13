@@ -6,6 +6,7 @@ import 'react-resizable/css/styles.css'
 import { useWindowSize } from '@/components/Hooks/useWindowSize'
 import LayoutItem from '@/components/ReactGridItem/index'
 import API from '@/service/index'
+import Loading from '../Loading'
 const { getComponentConfig } = API
 
 interface Props {
@@ -35,7 +36,6 @@ const Index = (props: Props): JSX.Element => {
         },
       )
     }
-
     if (componentid) {
       getConfig()
     }
@@ -54,6 +54,7 @@ const Index = (props: Props): JSX.Element => {
   return (
     <div className={styles['demo1-container']}>
       <div className={styles.index_page} ref={Container}>
+        {!layout && <Loading />}
         {gridContainerHeight && gridContainerWidth && layout && (
           <GridLayout
             style={{ height: '100%' }}
