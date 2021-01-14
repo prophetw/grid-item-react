@@ -156,6 +156,7 @@ export default {
           customComponentName: '',
           component_bg_class: 'component_bg_3',
           menuId: 'menuId',
+          color: '#d9551c',
           menuList,
         },
       })
@@ -173,6 +174,7 @@ export default {
           customComponentName: '',
           component_bg_class: 'component_bg_3',
           menuId: '1321',
+          color: '#02cc8c',
           menuList,
         },
       })
@@ -206,6 +208,7 @@ export default {
           customComponentName: '',
           component_bg_class: 'component_bg_3',
           menuId: 'menuId',
+          color: '#00a1e1',
           menuList,
         },
       })
