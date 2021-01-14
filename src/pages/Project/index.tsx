@@ -28,8 +28,8 @@ const Enterprise = (props: IRouteComponentProps) => {
       )}
       {curMenu && curMenu.id === '2' && (
         <div className={styles.project_brain}>
-          <LayoutMain componentid={curMenu.id} />
-          {/* <img src={EnvMonitor} width={'100%'} height={'100%'} alt="" /> */}
+          {/* <LayoutMain componentid={curMenu.id} /> */}
+          <img src={EnvMonitor} width={'100%'} height={'100%'} alt="" />
         </div>
       )}
       {curMenu && curMenu.id !== '1' && curMenu.id !== '2' && (

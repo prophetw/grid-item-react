@@ -4,7 +4,7 @@ export default defineConfig({
   nodeModulesTransform: {
     type: 'none',
   },
-  // base: '/dashboard',
+  base: '/dashboard',
   publicPath: process.env.NODE_ENV === 'production' ? '/dashboard/' : '/',
   hash: true,
   // history: { type: 'hash' },

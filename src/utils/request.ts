@@ -31,7 +31,7 @@ export default function request(options: {
   msg: string
   status: number
 }> {
-  const access_token = store.get('TOKEN') || ''
+  const access_token = store.get('token') || ''
   // console.log(access_token)
   const { method = 'get', data = {}, AxiosOptions = {} } = options
   //  data 根据 method 的不同，
