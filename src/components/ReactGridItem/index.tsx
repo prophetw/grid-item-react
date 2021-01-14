@@ -5,6 +5,7 @@ import API from '@/service/index'
 import { getChartComponent } from './getComponent'
 const { getWidgetConfig } = API
 import classnames from 'classnames'
+import { message } from 'antd'
 import Loading from '../Loading'
 import WidgetTitle from './WidgetTitle'
 import WidgetMenu from './WidgetMenu'
@@ -28,6 +29,7 @@ export interface GirdLayoutItemConfig {
   component_bg_class: string
   menuList?: MenuItem[]
   menuId?: string
+  color?: string
 }
 const Index = (props: PropsType): JSX.Element => {
   const windowSize = useWindowSize()
@@ -44,11 +46,14 @@ const Index = (props: PropsType): JSX.Element => {
   useEffect(() => {
     const getConfig = () => {
       getWidgetConfig({ widgetid }).then((res) => {
-        console.log(res)
         if (res.success) {
-          const config = res.data
+          const config: GirdLayoutItemConfig = res.data
           const { menuList } = config
           let { API } = config
+          const { reqMethod } = config
+          if (!reqMethod) {
+            message.error('返回的数据格式不满足')
+          }
           let newConfig = Object.assign(config)
           if (menuList && menuList.length > 0) {
             const defaultMenu = menuList[0].id
@@ -76,7 +81,7 @@ const Index = (props: PropsType): JSX.Element => {
     setCfg(newConfig)
   }
   useEffect(() => {
-    console.log('config change ', config)
+    // console.log('config change ', config)
     const timer = setTimeout(() => {
       if (config) {
         const { chartName, customComponentName } = config
