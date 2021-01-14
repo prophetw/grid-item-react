@@ -2,4 +2,4 @@
 // window.baseUrl = 'https://cim.citylinker.com:13382'
 
 // development
-window.baseUrl = ''
+window.baseUrl = 'http://127.0.0.1:9876'

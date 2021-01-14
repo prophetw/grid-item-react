@@ -15,6 +15,7 @@ import { useWindowSize } from '../Hooks/useWindowSize'
 import { DashboardType } from '@/models/useDashboard'
 import classnames from 'classnames'
 import store from 'store'
+import SystemUtils from '@/utils/system'
 export interface MenuItem {
   id: string
   name: string
@@ -109,14 +110,18 @@ const Header = () => {
       projectId = query.id || ''
     }
     console.log(query)
-    if (query && query['access-token']) {
-      const token = query['access-token']
-      store.set('token', token)
-    }
-    if (query && query['assetid']) {
-      const assetid = query['assetid']
-      store.set('assetid', assetid)
-    }
+    // const accessToken = SystemUtils.UrlParam('access-token')
+    store.set('token', SystemUtils.UrlParam('access-token'))
+    store.set('assetid', SystemUtils.UrlParam('assetid'))
+    // console.log('accessToken->', accessToken)
+    // if (query && query['access-token']) {
+    //   const token = query['access-token']
+    //   store.set('token', token)
+    // }
+    // if (query && query['assetid']) {
+    //   const assetid = query['assetid']
+    //   store.set('assetid', assetid)
+    // }
 
     getDropdownMenus(projectId)
   }, [])
