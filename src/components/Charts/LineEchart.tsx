@@ -137,12 +137,11 @@ const LineEchartComponent = (props: Props) => {
       if (height) {
         setHeight(height - 50)
       }
-      let needRefresh = reqMethod && API && !isRequested
-      console.log(' ---- cur-env ', process.env.NODE_ENV)
-      if (process.env.NODE_ENV === 'development') {
-        // dev env refresh every time
-        needRefresh = true
-      }
+      const needRefresh = reqMethod && API && !isRequested
+      // if (process.env.NODE_ENV === 'development') {
+      //   // dev env refresh every time
+      //   needRefresh = true
+      // }
       if (needRefresh) {
         setChartConfig(null)
         axios
