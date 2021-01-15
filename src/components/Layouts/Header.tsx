@@ -111,8 +111,8 @@ const Header = () => {
     }
     console.log(query)
     // const accessToken = SystemUtils.UrlParam('access-token')
-    store.set('token', SystemUtils.UrlParam('access-token'))
-    store.set('assetid', SystemUtils.UrlParam('assetid'))
+    localStorage.setItem('token', SystemUtils.UrlParam('access-token'))
+    localStorage.setItem('assetid', SystemUtils.UrlParam('assetid'))
     // console.log('accessToken->', accessToken)
     // if (query && query['access-token']) {
     //   const token = query['access-token']
